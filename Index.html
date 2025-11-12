@@ -1,0 +1,167 @@
+import React from "react";
+
+// YouTube Premium Landing Page (English) // - Price is shown in USD (change PRICE_USD below) // - Payments: crypto only (not processed on-site) — users must contact via Telegram // - Contact: Telegram link (change TELEGRAM_HANDLE)
+
+const PRICE_USD = 4; // change this to your desired USD price const TELEGRAM_HANDLE = "your_telegram_handle"; // replace with your Telegram username (without @)
+
+export default function YouTubePremiumLanding() { return ( <div className="min-h-screen bg-black text-white antialiased"> {/* Container /} <div className="max-w-4xl mx-auto px-6 py-12"> {/ Header */} <header className="flex items-center justify-between mb-12"> <div className="flex items-center gap-3"> <div className="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center shadow-lg"> <svg viewBox="0 0 24 24" className="w-6 h-6" fill="white" xmlns="http://www.w3.org/2000/svg"> <path d="M10 8.5v7l6-3.5-6-3.5z" /> </svg> </div> <div> <h1 className="text-xl font-semibold">YouTube Premium — Regional Pricing</h1> <p className="text-sm text-gray-300">Save on Premium. Crypto payments. Telegram support.</p> </div> </div>
+
+<nav className="hidden md:flex gap-6 items-center text-sm text-gray-300">
+        <a href="#how" className="hover:text-white">How it works</a>
+        <a href="#pricing" className="hover:text-white">Pricing</a>
+        <a href="#faq" className="hover:text-white">FAQ</a>
+        <a
+          href={`https://t.me/${TELEGRAM_HANDLE}`}
+          target="_blank"
+          rel="noreferrer"
+          className="bg-red-600 px-4 py-2 rounded-md text-sm font-medium shadow-md hover:opacity-95"
+        >
+          Contact on Telegram
+        </a>
+      </nav>
+
+      <div className="md:hidden">
+        <a
+          href={`https://t.me/${TELEGRAM_HANDLE}`}
+          target="_blank"
+          rel="noreferrer"
+          className="bg-red-600 px-3 py-2 rounded-md text-sm font-medium shadow-md"
+        >
+          Telegram
+        </a>
+      </div>
+    </header>
+
+    {/* Hero */}
+    <section className="grid md:grid-cols-2 gap-8 items-center mb-12">
+      <div>
+        <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">YouTube Premium — for less</h2>
+        <p className="mt-4 text-gray-300 text-lg">No ads, background play, downloads — all for a fraction of the regular price. Available to users worldwide via regional accounts.</p>
+
+        <div className="mt-6 flex gap-3 items-center">
+          <div className="rounded-lg bg-gray-900 px-5 py-4 shadow-inner">
+            <div className="text-sm text-gray-300">Monthly</div>
+            <div className="text-3xl font-bold mt-1">${PRICE_USD} <span className="text-base text-gray-400">/ month</span></div>
+          </div>
+
+          <a
+            href={`https://t.me/${TELEGRAM_HANDLE}`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-3 bg-red-600 hover:opacity-95 px-5 py-3 rounded-md font-semibold shadow-lg"
+          >
+            Contact on Telegram
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 12l20-8-8 20-3-9-9-3z" fill="white" />
+            </svg>
+          </a>
+        </div>
+
+        <p className="mt-4 text-sm text-gray-400 max-w-xl">Payments are collected only via crypto (we do not accept payments on this website). Message on Telegram to arrange payment and receive setup instructions. No account sharing — every purchase is configured per customer.</p>
+      </div>
+
+      <div className="rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-6 shadow-lg">
+        <div className="w-full h-64 rounded-md bg-black flex items-center justify-center border-2 border-dashed border-gray-700">
+          {/* Placeholder for promotional artwork — replace with your image */}
+          <div className="text-center text-gray-500">
+            <div className="text-2xl font-bold text-white mb-2">Premium for ${PRICE_USD}</div>
+            <div className="text-sm">No ads • Background play • Downloads</div>
+          </div>
+        </div>
+
+        <ul className="mt-6 space-y-3 text-gray-300 text-sm">
+          <li>• Regional pricing — legitimate subscriptions set up through supported regions.</li>
+          <li>• One-month plan (renew manually) — contact to renew.</li>
+          <li>• Crypto payment only — BTC/USDT/ETH supported; details after you contact us.</li>
+        </ul>
+      </div>
+    </section>
+
+    {/* How it works */}
+    <section id="how" className="mb-12">
+      <h3 className="text-2xl font-semibold mb-4">How it works</h3>
+      <div className="grid md:grid-cols-3 gap-6">
+        <div className="p-4 bg-gray-900 rounded-lg">
+          <h4 className="font-semibold">1. Contact</h4>
+          <p className="text-sm text-gray-300 mt-2">Send a message on Telegram with the plan you want. We reply with instructions and an invoice in crypto.</p>
+        </div>
+
+        <div className="p-4 bg-gray-900 rounded-lg">
+          <h4 className="font-semibold">2. Pay crypto</h4>
+          <p className="text-sm text-gray-300 mt-2">We accept major cryptocurrencies (BTC/ETH/USDT). The website does not process payments — payment addresses are provided privately.</p>
+        </div>
+
+        <div className="p-4 bg-gray-900 rounded-lg">
+          <h4 className="font-semibold">3. Setup & support</h4>
+          <p className="text-sm text-gray-300 mt-2">After payment we configure the subscription and send setup instructions. Ongoing support via Telegram.</p>
+        </div>
+      </div>
+    </section>
+
+    {/* Pricing */}
+    <section id="pricing" className="mb-12">
+      <h3 className="text-2xl font-semibold mb-6">Pricing</h3>
+
+      <div className="grid md:grid-cols-3 gap-6">
+        <div className="p-5 bg-gray-900 rounded-lg border border-gray-800">
+          <div className="text-sm text-gray-400">Individual</div>
+          <div className="text-2xl font-bold mt-2">${PRICE_USD} / month</div>
+          <p className="text-sm text-gray-300 mt-3">One regional account, works on devices that support YouTube Premium in that region.</p>
+          <a href={`https://t.me/${TELEGRAM_HANDLE}`} target="_blank" rel="noreferrer" className="mt-4 inline-block bg-red-600 px-4 py-2 rounded-md font-medium">Get it (Telegram)</a>
+        </div>
+
+        <div className="p-5 bg-gray-900 rounded-lg border border-gray-800">
+          <div className="text-sm text-gray-400">Family / Multiple (inquire)</div>
+          <div className="text-2xl font-bold mt-2">Contact</div>
+          <p className="text-sm text-gray-300 mt-3">If you need a family plan or multi-user setup, contact on Telegram for a custom quote and availability.</p>
+          <a href={`https://t.me/${TELEGRAM_HANDLE}`} target="_blank" rel="noreferrer" className="mt-4 inline-block bg-red-600 px-4 py-2 rounded-md font-medium">Contact</a>
+        </div>
+
+        <div className="p-5 bg-gray-900 rounded-lg border border-gray-800">
+          <div className="text-sm text-gray-400">Refunds & Renewals</div>
+          <div className="text-2xl font-bold mt-2">Manual</div>
+          <p className="text-sm text-gray-300 mt-3">Renewals are manual — contact us before your subscription ends. Refunds handled case-by-case; contact on Telegram first.</p>
+          <a href={`https://t.me/${TELEGRAM_HANDLE}`} target="_blank" rel="noreferrer" className="mt-4 inline-block bg-red-600 px-4 py-2 rounded-md font-medium">Support</a>
+        </div>
+      </div>
+    </section>
+
+    {/* FAQ */}
+    <section id="faq" className="mb-12">
+      <h3 className="text-2xl font-semibold mb-4">FAQ</h3>
+      <div className="space-y-4 text-sm text-gray-300">
+        <details className="bg-gray-900 p-4 rounded-md">
+          <summary className="font-medium">Is this legal?</summary>
+          <div className="mt-2 text-gray-300">We provide regional YouTube Premium subscriptions by configuring supported regional accounts. Users should ensure the subscription terms are acceptable in their country. Contact us for details.</div>
+        </details>
+
+        <details className="bg-gray-900 p-4 rounded-md">
+          <summary className="font-medium">Which cryptocurrencies do you accept?</summary>
+          <div className="mt-2 text-gray-300">We accept BTC, ETH, USDT and other major coins — specific options provided on request.</div>
+        </details>
+
+        <details className="bg-gray-900 p-4 rounded-md">
+          <summary className="font-medium">Do you store my payment info?</summary>
+          <div className="mt-2 text-gray-300">No. Payments are done on-chain or via external wallets. We only store necessary contact and subscription info to set up the account.</div>
+        </details>
+      </div>
+    </section>
+
+    {/* Footer */}
+    <footer className="mt-12 border-t border-gray-800 pt-8 text-sm text-gray-400">
+      <div className="flex flex-col md:flex-row md:justify-between gap-4">
+        <div>
+          <div className="font-semibold">YouTube Premium — Regional</div>
+          <div className="mt-2">Payments: crypto only. Contact via Telegram.</div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <a href={`https://t.me/${TELEGRAM_HANDLE}`} target="_blank" rel="noreferrer" className="text-red-500 font-medium">@{TELEGRAM_HANDLE}</a>
+          <div className="text-gray-500">© {new Date().getFullYear()} — All rights reserved</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+); }
