@@ -1,167 +1,698 @@
-import React from "react";
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>YouTube Premium — Regional (Crypto / Telegram)</title>
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --card:#111;
+      --card-hover:#181818;
+      --muted:#9aa1a6;
+      --red:#ff0033;
+      --red-glow:rgba(255,0,51,0.3);
+      --white:#fff;
+      --radius:14px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    
+    * { box-sizing: border-box; }
+    
+    html,body{
+      height:100%;
+      margin:0;
+      background:var(--bg);
+      color:var(--white);
+      overflow-x:hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 20% 50%, rgba(255,0,51,0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(255,0,51,0.05) 0%, transparent 50%);
+      animation: bgShift 20s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    @keyframes bgShift {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-10%, -10%); }
+    }
+    
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:40px 28px;
+      position:relative;
+      z-index:1;
+    }
+    
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding:20px 0;
+      animation: fadeInDown 0.8s ease-out;
+    }
+    
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+    
+    .logo{
+      width:60px;
+      height:60px;
+      border-radius:16px;
+      background:linear-gradient(135deg, var(--red) 0%, #cc0028 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 10px 40px var(--red-glow), 0 0 0 1px rgba(255,255,255,0.1);
+      position:relative;
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+    
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    
+    .logo::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--red), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .logo:hover::before {
+      opacity: 0.3;
+    }
+    
+    .logo svg{
+      width:28px;
+      height:28px;
+      fill:#fff;
+      position:relative;
+      z-index:1;
+    }
+    
+    h1{
+      margin:0;
+      font-size:22px;
+      font-weight:700;
+      background: linear-gradient(135deg, #fff 0%, #ddd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    p.lead{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
 
-// YouTube Premium Landing Page (English) // - Price is shown in USD (change PRICE_USD below) // - Payments: crypto only (not processed on-site) — users must contact via Telegram // - Contact: Telegram link (change TELEGRAM_HANDLE)
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      background:linear-gradient(135deg, var(--red) 0%, #cc0028 100%);
+      color:var(--white);
+      padding:12px 24px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:14px;
+      box-shadow:0 4px 20px var(--red-glow);
+      transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position:relative;
+      overflow:hidden;
+    }
+    
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow:0 8px 30px var(--red-glow);
+    }
+    
+    .cta:hover::before {
+      opacity: 1;
+    }
+    
+    .cta:active {
+      transform: translateY(0);
+    }
 
-const PRICE_USD = 4; // change this to your desired USD price const TELEGRAM_HANDLE = "your_telegram_handle"; // replace with your Telegram username (without @)
+    .hero{
+      display:flex;
+      flex-wrap:wrap;
+      gap:40px;
+      margin-top:60px;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .left{flex:1 1 400px;}
+    
+    .right{
+      flex:0 1 420px;
+      background:linear-gradient(135deg,#141414,#0f0f0f);
+      border-radius:20px;
+      padding:30px;
+      box-shadow:0 20px 60px rgba(0,0,0,.6);
+      border:1px solid rgba(255,255,255,.05);
+      position:relative;
+      overflow:hidden;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+    
+    .right::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    }
+    
+    .big{
+      font-size:52px;
+      line-height:1.1;
+      margin:0;
+      font-weight:900;
+      background: linear-gradient(135deg, #fff 0%, #999 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing:-0.02em;
+    }
+    
+    .desc{
+      color:var(--muted);
+      margin-top:16px;
+      font-size:16px;
+      line-height:1.6;
+    }
+    
+    .price-wrapper {
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-top:32px;
+      flex-wrap:wrap;
+    }
+    
+    .price-card{
+      background:rgba(255,255,255,.04);
+      padding:16px 24px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.06);
+      backdrop-filter:blur(10px);
+      transition:all 0.3s;
+    }
+    
+    .price-card:hover {
+      background:rgba(255,255,255,.06);
+      border-color:rgba(255,255,255,.1);
+      transform:translateY(-2px);
+    }
+    
+    .price-card .label{
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+      font-weight:600;
+    }
+    
+    .price-card .price{
+      font-size:32px;
+      font-weight:900;
+      margin-top:4px;
+      background: linear-gradient(135deg, #fff 0%, #ddd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .price-card .price span{
+      font-size:16px;
+      color:var(--muted);
+    }
 
-export default function YouTubePremiumLanding() { return ( <div className="min-h-screen bg-black text-white antialiased"> {/* Container /} <div className="max-w-4xl mx-auto px-6 py-12"> {/ Header */} <header className="flex items-center justify-between mb-12"> <div className="flex items-center gap-3"> <div className="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center shadow-lg"> <svg viewBox="0 0 24 24" className="w-6 h-6" fill="white" xmlns="http://www.w3.org/2000/svg"> <path d="M10 8.5v7l6-3.5-6-3.5z" /> </svg> </div> <div> <h1 className="text-xl font-semibold">YouTube Premium — Regional Pricing</h1> <p className="text-sm text-gray-300">Save on Premium. Crypto payments. Telegram support.</p> </div> </div>
+    ul.bl{
+      margin:28px 0 0;
+      padding:0;
+      list-style:none;
+      color:var(--muted);
+      font-size:15px;
+    }
+    
+    ul.bl li{
+      margin:14px 0;
+      padding-left:28px;
+      position:relative;
+    }
+    
+    ul.bl li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--red);
+      font-weight: 900;
+      font-size: 16px;
+    }
 
-<nav className="hidden md:flex gap-6 items-center text-sm text-gray-300">
-        <a href="#how" className="hover:text-white">How it works</a>
-        <a href="#pricing" className="hover:text-white">Pricing</a>
-        <a href="#faq" className="hover:text-white">FAQ</a>
-        <a
-          href={`https://t.me/${TELEGRAM_HANDLE}`}
-          target="_blank"
-          rel="noreferrer"
-          className="bg-red-600 px-4 py-2 rounded-md text-sm font-medium shadow-md hover:opacity-95"
-        >
-          Contact on Telegram
+    .featured-card {
+      height:280px;
+      border-radius:16px;
+      background:linear-gradient(135deg, #000 0%, #0a0a0a 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:2px solid rgba(255,255,255,.03);
+      position:relative;
+      overflow:hidden;
+      transition:all 0.3s;
+    }
+    
+    .featured-card::before {
+      content: '';
+      position: absolute;
+      inset: -100%;
+      background: conic-gradient(from 0deg, transparent, var(--red-glow), transparent 30%);
+      animation: rotate 4s linear infinite;
+    }
+    
+    @keyframes rotate {
+      100% { transform: rotate(360deg); }
+    }
+    
+    .featured-card::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: linear-gradient(135deg, #000 0%, #0a0a0a 100%);
+      border-radius: 14px;
+    }
+    
+    .featured-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    
+    .featured-card:hover {
+      transform: scale(1.02);
+    }
+    
+    .featured-title {
+      font-size:28px;
+      font-weight:900;
+      margin-bottom:12px;
+      background: linear-gradient(135deg, var(--red) 0%, #ff3355 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .featured-desc {
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    section.blocks{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
+      margin-top:60px;
+      animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+    
+    .card{
+      background:var(--card);
+      padding:24px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.04);
+      transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position:relative;
+      overflow:hidden;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .card:hover {
+      background:var(--card-hover);
+      border-color:rgba(255,255,255,.08);
+      transform:translateY(-4px);
+      box-shadow:0 12px 40px rgba(0,0,0,.4);
+    }
+    
+    .card:hover::before {
+      opacity: 1;
+    }
+    
+    .card h4{
+      margin:0 0 12px;
+      font-size:17px;
+      font-weight:700;
+    }
+    
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    details{
+      background:rgba(255,255,255,.02);
+      padding:16px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.04);
+      margin-top:20px;
+      transition:all 0.3s;
+    }
+    
+    details[open] {
+      background:rgba(255,255,255,.04);
+    }
+    
+    summary{
+      font-weight:700;
+      cursor:pointer;
+      user-select:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    
+    summary::after {
+      content: '+';
+      font-size: 20px;
+      transition: transform 0.3s;
+    }
+    
+    details[open] summary::after {
+      transform: rotate(45deg);
+    }
+    
+    summary:hover {
+      color: var(--red);
+    }
+    
+    details p {
+      margin-top:12px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+    
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.03);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 16px;
+      border: 1px solid rgba(255,255,255,.04);
+    }
+    
+    .trust-badge::before {
+      content: '🔒';
+      font-size: 14px;
+    }
+    
+    footer{
+      margin-top:80px;
+      border-top:1px solid rgba(255,255,255,.05);
+      padding-top:32px;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+      animation: fadeInUp 0.8s ease-out 0.8s both;
+    }
+    
+    footer a {
+      color:var(--red);
+      font-weight:700;
+      text-decoration:none;
+      transition:color 0.3s;
+    }
+    
+    footer a:hover {
+      color:#ff3355;
+    }
+
+    @media(max-width:768px){
+      .big{font-size:36px;letter-spacing:-0.01em;}
+      .container{padding:20px 16px;}
+      .logo{width:48px;height:48px;}
+      .logo svg{width:24px;height:24px;}
+      h1{font-size:17px;}
+      p.lead{font-size:13px;}
+      
+      header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:16px;
+        padding:16px 0;
+      }
+      
+      header nav{width:100%;}
+      header .cta{
+        width:100%;
+        justify-content:center;
+        padding:14px 24px;
+        font-size:15px;
+      }
+      
+      .hero{margin-top:32px;gap:24px;}
+      .left{order:1;}
+      .right{order:2;padding:24px;}
+      
+      .desc{font-size:15px;line-height:1.65;}
+      
+      .price-wrapper{
+        flex-direction:column;
+        align-items:stretch;
+        gap:12px;
+        margin-top:24px;
+      }
+      
+      .price-card{
+        padding:18px 20px;
+        text-align:center;
+      }
+      
+      .price-card .price{font-size:36px;}
+      
+      .price-wrapper .cta{
+        width:100%;
+        justify-content:center;
+        padding:16px 24px;
+        font-size:16px;
+      }
+      
+      .trust-badge{
+        width:100%;
+        justify-content:center;
+        padding:10px 16px;
+      }
+      
+      ul.bl{margin-top:20px;font-size:14px;}
+      ul.bl li{margin:12px 0;padding-left:24px;}
+      
+      .featured-card{height:200px;}
+      .featured-title{font-size:24px;}
+      .featured-desc{font-size:13px;padding:0 20px;}
+      
+      details{padding:14px;margin-top:16px;}
+      summary{font-size:15px;}
+      details p{font-size:13px;}
+      
+      section.blocks{
+        grid-template-columns:1fr;
+        gap:14px;
+        margin-top:40px;
+      }
+      
+      .card{padding:20px;}
+      .card h4{font-size:16px;margin-bottom:10px;}
+      .card p{font-size:13px;}
+      
+      footer{
+        margin-top:60px;
+        padding-top:24px;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:16px;
+        font-size:14px;
+      }
+      
+      footer > div:last-child{
+        text-align:left;
+        width:100%;
+      }
+    }
+    
+    @media(max-width:480px){
+      .big{font-size:30px;}
+      .container{padding:16px 14px;}
+      h1{font-size:16px;}
+      .logo{width:44px;height:44px;}
+      .price-card .price{font-size:32px;}
+      .featured-card{height:180px;}
+      .featured-title{font-size:22px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M10 8.5v7l6-3.5-6-3.5z"/></svg>
+        </div>
+        <div>
+          <h1>YouTube Premium — Regional Pricing</h1>
+          <p class="lead">Save on Premium · Crypto payments · Telegram support</p>
+        </div>
+      </div>
+
+      <nav>
+        <a href="https://t.me/@YAMINx14" target="_blank" rel="noreferrer" class="cta">
+          <span>Contact on Telegram</span>
+          <span>→</span>
         </a>
       </nav>
-
-      <div className="md:hidden">
-        <a
-          href={`https://t.me/${TELEGRAM_HANDLE}`}
-          target="_blank"
-          rel="noreferrer"
-          className="bg-red-600 px-3 py-2 rounded-md text-sm font-medium shadow-md"
-        >
-          Telegram
-        </a>
-      </div>
     </header>
 
-    {/* Hero */}
-    <section className="grid md:grid-cols-2 gap-8 items-center mb-12">
-      <div>
-        <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">YouTube Premium — for less</h2>
-        <p className="mt-4 text-gray-300 text-lg">No ads, background play, downloads — all for a fraction of the regular price. Available to users worldwide via regional accounts.</p>
+    <main class="hero">
+      <div class="left">
+        <h2 class="big">YouTube Premium for less</h2>
+        <p class="desc">No ads · background play · downloads — all for a fraction of the regular price. Available worldwide using regional subscriptions.</p>
 
-        <div className="mt-6 flex gap-3 items-center">
-          <div className="rounded-lg bg-gray-900 px-5 py-4 shadow-inner">
-            <div className="text-sm text-gray-300">Monthly</div>
-            <div className="text-3xl font-bold mt-1">${PRICE_USD} <span className="text-base text-gray-400">/ month</span></div>
+        <div class="price-wrapper">
+          <div class="price-card">
+            <div class="label">Monthly Plan</div>
+            <div class="price">$4 <span>/ month</span></div>
           </div>
 
-          <a
-            href={`https://t.me/${TELEGRAM_HANDLE}`}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-3 bg-red-600 hover:opacity-95 px-5 py-3 rounded-md font-semibold shadow-lg"
-          >
-            Contact on Telegram
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 12l20-8-8 20-3-9-9-3z" fill="white" />
-            </svg>
+          <a class="cta" href="https://t.me/@YAMINx14" target="_blank" rel="noreferrer">
+            <span>Get Started</span>
+            <span>→</span>
           </a>
         </div>
+        
+        <div class="trust-badge">Secure crypto payments only</div>
 
-        <p className="mt-4 text-sm text-gray-400 max-w-xl">Payments are collected only via crypto (we do not accept payments on this website). Message on Telegram to arrange payment and receive setup instructions. No account sharing — every purchase is configured per customer.</p>
+        <p class="desc" style="margin-top:24px">Payments collected via cryptocurrency only. We do <strong>not</strong> accept payments on this website — we provide payment details privately on Telegram after you contact us.</p>
+
+        <ul class="bl">
+          <li>Regional pricing — subscriptions set up through supported regions</li>
+          <li>One-month plan — renew manually via Telegram</li>
+          <li>Crypto payment only — BTC / ETH / USDT (payment address after contact)</li>
+          <li>Fast setup — typically activated within 24 hours</li>
+        </ul>
       </div>
 
-      <div className="rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-6 shadow-lg">
-        <div className="w-full h-64 rounded-md bg-black flex items-center justify-center border-2 border-dashed border-gray-700">
-          {/* Placeholder for promotional artwork — replace with your image */}
-          <div className="text-center text-gray-500">
-            <div className="text-2xl font-bold text-white mb-2">Premium for ${PRICE_USD}</div>
-            <div className="text-sm">No ads • Background play • Downloads</div>
+      <aside class="right">
+        <div class="featured-card">
+          <div class="featured-content">
+            <div class="featured-title">$4 Premium</div>
+            <div class="featured-desc">No ads · Background play · Downloads</div>
           </div>
         </div>
 
-        <ul className="mt-6 space-y-3 text-gray-300 text-sm">
-          <li>• Regional pricing — legitimate subscriptions set up through supported regions.</li>
-          <li>• One-month plan (renew manually) — contact to renew.</li>
-          <li>• Crypto payment only — BTC/USDT/ETH supported; details after you contact us.</li>
-        </ul>
-      </div>
-    </section>
-
-    {/* How it works */}
-    <section id="how" className="mb-12">
-      <h3 className="text-2xl font-semibold mb-4">How it works</h3>
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="p-4 bg-gray-900 rounded-lg">
-          <h4 className="font-semibold">1. Contact</h4>
-          <p className="text-sm text-gray-300 mt-2">Send a message on Telegram with the plan you want. We reply with instructions and an invoice in crypto.</p>
-        </div>
-
-        <div className="p-4 bg-gray-900 rounded-lg">
-          <h4 className="font-semibold">2. Pay crypto</h4>
-          <p className="text-sm text-gray-300 mt-2">We accept major cryptocurrencies (BTC/ETH/USDT). The website does not process payments — payment addresses are provided privately.</p>
-        </div>
-
-        <div className="p-4 bg-gray-900 rounded-lg">
-          <h4 className="font-semibold">3. Setup & support</h4>
-          <p className="text-sm text-gray-300 mt-2">After payment we configure the subscription and send setup instructions. Ongoing support via Telegram.</p>
-        </div>
-      </div>
-    </section>
-
-    {/* Pricing */}
-    <section id="pricing" className="mb-12">
-      <h3 className="text-2xl font-semibold mb-6">Pricing</h3>
-
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="p-5 bg-gray-900 rounded-lg border border-gray-800">
-          <div className="text-sm text-gray-400">Individual</div>
-          <div className="text-2xl font-bold mt-2">${PRICE_USD} / month</div>
-          <p className="text-sm text-gray-300 mt-3">One regional account, works on devices that support YouTube Premium in that region.</p>
-          <a href={`https://t.me/${TELEGRAM_HANDLE}`} target="_blank" rel="noreferrer" className="mt-4 inline-block bg-red-600 px-4 py-2 rounded-md font-medium">Get it (Telegram)</a>
-        </div>
-
-        <div className="p-5 bg-gray-900 rounded-lg border border-gray-800">
-          <div className="text-sm text-gray-400">Family / Multiple (inquire)</div>
-          <div className="text-2xl font-bold mt-2">Contact</div>
-          <p className="text-sm text-gray-300 mt-3">If you need a family plan or multi-user setup, contact on Telegram for a custom quote and availability.</p>
-          <a href={`https://t.me/${TELEGRAM_HANDLE}`} target="_blank" rel="noreferrer" className="mt-4 inline-block bg-red-600 px-4 py-2 rounded-md font-medium">Contact</a>
-        </div>
-
-        <div className="p-5 bg-gray-900 rounded-lg border border-gray-800">
-          <div className="text-sm text-gray-400">Refunds & Renewals</div>
-          <div className="text-2xl font-bold mt-2">Manual</div>
-          <p className="text-sm text-gray-300 mt-3">Renewals are manual — contact us before your subscription ends. Refunds handled case-by-case; contact on Telegram first.</p>
-          <a href={`https://t.me/${TELEGRAM_HANDLE}`} target="_blank" rel="noreferrer" className="mt-4 inline-block bg-red-600 px-4 py-2 rounded-md font-medium">Support</a>
-        </div>
-      </div>
-    </section>
-
-    {/* FAQ */}
-    <section id="faq" className="mb-12">
-      <h3 className="text-2xl font-semibold mb-4">FAQ</h3>
-      <div className="space-y-4 text-sm text-gray-300">
-        <details className="bg-gray-900 p-4 rounded-md">
-          <summary className="font-medium">Is this legal?</summary>
-          <div className="mt-2 text-gray-300">We provide regional YouTube Premium subscriptions by configuring supported regional accounts. Users should ensure the subscription terms are acceptable in their country. Contact us for details.</div>
+        <details>
+          <summary>Is this legal?</summary>
+          <p>We configure legal YouTube Premium subscriptions. Users should check terms of service in their country. Contact on Telegram for more info.</p>
         </details>
-
-        <details className="bg-gray-900 p-4 rounded-md">
-          <summary className="font-medium">Which cryptocurrencies do you accept?</summary>
-          <div className="mt-2 text-gray-300">We accept BTC, ETH, USDT and other major coins — specific options provided on request.</div>
+        
+        <details>
+          <summary>How long does setup take?</summary>
+          <p>Most subscriptions are activated within 24 hours after payment confirmation. You'll receive detailed setup instructions via Telegram.</p>
         </details>
+      </aside>
+    </main>
 
-        <details className="bg-gray-900 p-4 rounded-md">
-          <summary className="font-medium">Do you store my payment info?</summary>
-          <div className="mt-2 text-gray-300">No. Payments are done on-chain or via external wallets. We only store necessary contact and subscription info to set up the account.</div>
-        </details>
+    <section class="blocks">
+      <div class="card">
+        <h4>1. Contact Us</h4>
+        <p>Message on Telegram with the plan you want. We reply with instructions and an invoice in crypto.</p>
+      </div>
+
+      <div class="card">
+        <h4>2. Pay with Crypto</h4>
+        <p>We accept major cryptocurrencies. Payment addresses provided privately after contact.</p>
+      </div>
+
+      <div class="card">
+        <h4>3. Get Premium</h4>
+        <p>We configure the subscription and send setup steps. Ongoing support via Telegram.</p>
       </div>
     </section>
 
-    {/* Footer */}
-    <footer className="mt-12 border-t border-gray-800 pt-8 text-sm text-gray-400">
-      <div className="flex flex-col md:flex-row md:justify-between gap-4">
-        <div>
-          <div className="font-semibold">YouTube Premium — Regional</div>
-          <div className="mt-2">Payments: crypto only. Contact via Telegram.</div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <a href={`https://t.me/${TELEGRAM_HANDLE}`} target="_blank" rel="noreferrer" className="text-red-500 font-medium">@{TELEGRAM_HANDLE}</a>
-          <div className="text-gray-500">© {new Date().getFullYear()} — All rights reserved</div>
-        </div>
+    <footer>
+      <div>
+        <strong>YouTube Premium — Regional</strong>
+        <div style="margin-top:8px">Payments: crypto only. Contact via Telegram.</div>
+      </div>
+      <div style="text-align:right">
+        <a href="https://t.me/@YAMINx14" target="_blank" rel="noreferrer">@YAMINx14</a>
+        <div style="font-size:13px;margin-top:8px">© <span id="yr"></span></div>
       </div>
     </footer>
   </div>
-</div>
 
-); }
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
